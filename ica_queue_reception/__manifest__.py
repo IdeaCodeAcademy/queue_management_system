@@ -3,6 +3,8 @@
     "author":"IdeaCode Academy",
     "depends": ["base"],
     "data":[
+        "security/ir.model.access.csv",
+
         "views/ica_queue_reception.xml",
 
         "views/menus.xml",
