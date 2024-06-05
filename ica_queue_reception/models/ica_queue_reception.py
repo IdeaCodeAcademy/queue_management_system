@@ -5,3 +5,4 @@ class IcaQueueReception(models.Model):
     _description = "Ica Queue Reception"
 
     name = fields.Char(string="Name")
+    partner_id = fields.Many2one("res.partner", string="Partner")
