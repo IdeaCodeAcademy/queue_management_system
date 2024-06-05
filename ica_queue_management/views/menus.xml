@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="queue_root" name="Queue" sequence="0">
+        <menuitem id="conf_categ" name="Configuration" sequence="0">
+            <menuitem id="ica_queue_counter_categ" name="Counters"  action="ica_queue_management.ica_queue_counter_action"/>
+        </menuitem>
+    </menuitem>
+</odoo>

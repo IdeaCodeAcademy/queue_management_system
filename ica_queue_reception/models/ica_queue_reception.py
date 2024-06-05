@@ -6,3 +6,4 @@ class IcaQueueReception(models.Model):
 
     name = fields.Char(string="Name")
     partner_id = fields.Many2one("res.partner", string="Partner")
+    counter_id = fields.Many2one("ica.queue.counter", string="Counter")
