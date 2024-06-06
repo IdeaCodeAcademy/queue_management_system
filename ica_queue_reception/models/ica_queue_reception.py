@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class IcaQueueReception(models.Model):
@@ -16,9 +17,23 @@ class IcaQueueReception(models.Model):
             values['name'] = self.env['ir.sequence'].next_by_code('ica.queue') or _("New")
         return super(IcaQueueReception, self).create(values)
 
-
     def action_confirm(self):
-        self.state = 'confirm'
+        self.change_state('confirm')
+        # self.state = 'confirm'
 
     def action_draft(self):
-        self.state = 'draft'
+        self.change_state('draft')
+
+    def change_state(self,new_state):
+        if self.is_allowed(new_state,self.state):
+            self.state = new_state
+        else:
+            raise ValidationError(_('Moving from %s to %s is not allowed.') % (self.state,new_state))
+
+    @api.model
+    def is_allowed(self, new_state, old_state):
+        allowed = [
+            ('draft', 'confirm'),
+            ('confirm', 'draft'),
+        ]
+        return (new_state, old_state) in allowed
