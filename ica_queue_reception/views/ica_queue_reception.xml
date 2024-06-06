@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <record id="ica_queue_reception_view_form" model="ir.ui.view">
+        <field name="name">ica_queue_reception_view_form</field>
+        <field name="model">ica.queue.reception</field>
+        <field name="arch" type="xml">
+            <form string="ica_queue_reception_form">
+                <header>
+                    <button name="action_draft" string="Draft" type="object"/>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="counter_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
     <record id="ica_queue_reception_action" model="ir.actions.act_window">
         <field name="name">Receptions</field>
         <field name="type">ir.actions.act_window</field>
