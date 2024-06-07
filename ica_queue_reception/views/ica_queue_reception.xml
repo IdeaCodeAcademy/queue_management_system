@@ -8,6 +8,8 @@
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="counter_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'"
+                       decoration-success="state == 'confirm'"/>
             </tree>
         </field>
     </record>
@@ -19,7 +21,8 @@
             <form string="ica_queue_reception_form">
                 <header>
                     <button name="action_draft" string="Draft" type="object" invisible="state == 'draft'"/>
-                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state == 'confirm'"/>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary"
+                            invisible="state == 'confirm'"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -40,10 +43,31 @@
             </form>
         </field>
     </record>
+
+    <record id="ica_queue_reception_view_search" model="ir.ui.view">
+        <field name="name">ica_queue_reception_view_search</field>
+        <field name="model">ica.queue.reception</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="counter_id"/>
+                <field name="state"/>
+                <filter name="draft" string="draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="confirm" string="confirm" domain="[('state', '=', 'confirm')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="State" name="groupby_state" context="{'group_by': 'state'}"/>
+                    <filter string="Counter" name="groupby_counter_id" context="{'group_by': 'counter_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="ica_queue_reception_action" model="ir.actions.act_window">
         <field name="name">Receptions</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">ica.queue.reception</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_groupby_state':True}</field>
     </record>
 </odoo>
