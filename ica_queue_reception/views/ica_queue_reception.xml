@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <record id="ica_queue_reception_view_tree" model="ir.ui.view">
+        <field name="name">ica_queue_reception_view_tree</field>
+        <field name="model">ica.queue.reception</field>
+        <field name="arch" type="xml">
+            <tree string="ica_queue_reception_tree">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="counter_id"/>
+            </tree>
+        </field>
+    </record>
+
     <record id="ica_queue_reception_view_form" model="ir.ui.view">
         <field name="name">ica_queue_reception_view_form</field>
         <field name="model">ica.queue.reception</field>
@@ -21,7 +33,7 @@
                             <field name="partner_id"/>
                         </group>
                         <group>
-                            <field name="counter_id"/>
+                            <field name="counter_id" options="{'no_create': True}"/>
                         </group>
                     </group>
                 </sheet>
