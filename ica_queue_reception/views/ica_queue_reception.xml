@@ -6,7 +6,6 @@
         <field name="model">ica.queue.reception</field>
         <field name="arch" type="xml">
             <kanban sample="1">
-
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="counter_id"/>

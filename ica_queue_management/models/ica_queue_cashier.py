@@ -1,4 +1,4 @@
-from odoo import fields, models, _
+from odoo import fields, models, _,api
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -17,6 +17,13 @@ class IcaQueueCashier(models.Model):
         ('done', 'Done'),
     ], default='draft')
 
+    @api.constrains('state')
+    def _check_state(self):
+        domain = [('counter_id', '=', self.counter_id.id), ('state', '=', 'current'),('id','!=',self.id)]
+        records = self.search(domain)
+        if self.state == 'current' and records:
+            raise ValidationError(_("Current Queue must be unique."))
+
     def action_rest_to_draft(self):
         self.state = 'draft'
 
@@ -24,9 +31,6 @@ class IcaQueueCashier(models.Model):
         self.state = 'waiting'
 
     def action_current(self):
-        domain = [('counter_id', '=', self.counter_id.id), ('state', '=', 'current')]
-        if self.counter_id and self.search(domain):
-            raise ValidationError(_("Current Queue must be unique."))
         self.state = 'current'
 
     def action_missing(self):

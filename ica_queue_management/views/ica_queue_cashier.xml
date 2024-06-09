@@ -26,6 +26,7 @@
                             invisible="state != 'waiting'"/>
                     <button name="action_missing" type="object" class="btn-danger" string="Missing"
                             invisible="state != 'current'"/>
+                    <button name="action_waiting" type="object" string="Recall" invisible="state != 'missing'"/>
                     <button name="action_to_pharmacy" type="object" class="btn-warning" string="To Pharmacy"
                             invisible="state != 'current'"/>
                     <button name="action_done" type="object" class="btn-success" string="Done"
