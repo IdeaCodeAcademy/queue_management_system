@@ -118,7 +118,7 @@
         <field name="name">Receptions</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">ica.queue.reception</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,tree,pivot,graph,form</field>
         <field name="context">{'search_default_groupby_state':False}</field>
     </record>
 </odoo>
