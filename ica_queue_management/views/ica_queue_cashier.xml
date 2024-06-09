@@ -20,7 +20,7 @@
         <field name="arch" type="xml">
             <form string="ica_queue_cashier_form">
                 <header>
-                    <button name="action_rest_to_draft" type="object" string="Draft" invisible="1"/>
+                    <button name="action_rest_to_draft" type="object" string="Draft" invisible="0"/>
                     <button name="action_waiting" type="object" string="Waiting" invisible="state != 'draft'"/>
                     <button name="action_current" type="object" class="btn-info" string="Pick Up"
                             invisible="state != 'waiting'"/>
@@ -34,9 +34,16 @@
                     <field name="state" widget="statusbar" statusbar_visible="waiting,current,missing,to_pharmacy"/>
                 </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
                     <group>
-                        <field name="name"/>
+                        <field name="name" invisible="1"/>
                         <field name="counter_id"/>
+                        <field name="start_datetime"/>
+                        <field name="end_datetime"/>
                     </group>
                 </sheet>
             </form>

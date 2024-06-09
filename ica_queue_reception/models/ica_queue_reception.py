@@ -9,11 +9,11 @@ class IcaQueueReception(models.Model):
     name = fields.Char(string="Reference", readonly=True, default=lambda x: _('New'))
     partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     image_1920 = fields.Binary(related="partner_id.image_1920")
-    counter_id = fields.Many2one("ica.queue.counter", string="Counter", required=False,readonly=True,
+    counter_id = fields.Many2one("ica.queue.counter", string="Counter", required=False, readonly=True,
                                  domain="[('type', '=', 'reception')]")
     state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm')], default="draft")
     active = fields.Boolean(string="Active", default=True)
-    date = fields.Datetime(string="Date", default=fields.Datetime.now)
+    date = fields.Datetime(string="Date", default=fields.Datetime.now,readonly=True)
 
     # @api.model
     # def create(self, values):
@@ -24,12 +24,7 @@ class IcaQueueReception(models.Model):
         if self.name == _("New"):
             self.name = self.env['ir.sequence'].next_by_code('ica.queue') or _("New")
 
-        current_partner = self.env.user.partner_id
-        counter_id = current_partner.counter_id
-        if counter_id.type == 'reception':
-            self.counter_id =current_partner.counter_id.id
-        else:
-            raise ValidationError(_(f"Your Counter is {counter_id.name}"))
+        self.env['ica.queue.cashier']._check_counter_type(self, counter_type="reception")
 
         self.change_state('confirm')
         self.date = fields.Datetime.now()

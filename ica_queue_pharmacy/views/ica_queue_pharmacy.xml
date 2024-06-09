@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ica_queue_form_view_form" model="ir.ui.view">
+        <field name="name">ica_queue_form_view_form</field>
+        <field name="model">ica.queue.pharmacy</field>
+        <field name="arch" type="xml">
+            <form string="ica_queue_form_form">
+                <header>
+                    <button name="action_draft" type="object" string="Draft"/>
+                    <button name="action_waiting" type="object" string="Waiting" invisible="state != 'draft'"/>
+                    <button name="action_current" type="object" string="Pick Up" invisible="state != 'waiting'"
+                            class="btn-info"/>
+                    <button name="action_missing" type="object" string="Missing" invisible="state != 'current'"
+                            class="btn-danger"/>
+                    <button name="action_done" type="object" string="Done" invisible="state != 'current'"
+                            class="btn-success"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Queue Information">
+                            <field name="name"/>
+                            <field name="counter_id"/>
+                        </group>
+                        <group string="Time Info">
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="ica_queue_pharmacy_action" model="ir.actions.act_window">
+        <field name="name">Pharmacy</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ica.queue.pharmacy</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
