@@ -12,6 +12,7 @@ class IcaQueueReception(models.Model):
     counter_id = fields.Many2one("ica.queue.counter", string="Counter",required=True)
     state = fields.Selection([('draft','Draft'),('confirm','Confirm')],default="draft")
     active = fields.Boolean(string="Active",default=False)
+    date = fields.Datetime(string="Date",default=fields.Datetime.now)
 
     # @api.model
     # def create(self, values):
@@ -22,6 +23,7 @@ class IcaQueueReception(models.Model):
         if self.name == _("New"):
             self.name = self.env['ir.sequence'].next_by_code('ica.queue') or _("New")
         self.change_state('confirm')
+        self.date = fields.Datetime.now()
         # self.state = 'confirm'
 
     def action_draft(self):

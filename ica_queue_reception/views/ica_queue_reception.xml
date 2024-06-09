@@ -21,8 +21,8 @@
                                 <img t-attf-src="#{avatar_image}" role="img" t-att-alt="record.partner_id.value"/>
                             </div>
                             <div class="ribbon ribbon-top-right" invisible="active">
-                                    <span class="text-bg-danger">Archived</span>
-                                </div>
+                                <span class="text-bg-danger">Archived</span>
+                            </div>
                             <div class="oe_kanban_details d-flex flex-column justify-content-between">
                                 <div>
                                     <strong class="o_kanban_record_title oe_partner_heading">
@@ -85,6 +85,7 @@
                             <field name="partner_id"/>
                         </group>
                         <group>
+                            <field name="date"/>
                             <field name="counter_id" options="{'no_create': True}"/>
                         </group>
                     </group>
