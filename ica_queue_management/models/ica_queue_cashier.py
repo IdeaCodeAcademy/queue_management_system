@@ -7,7 +7,7 @@ class IcaQueueCashier(models.Model):
     _description = 'IcaQueueCashier'
 
     name = fields.Char()
-    counter_id = fields.Many2one('ica.queue.counter', string='Counter', domain="[('type','=','cashier')]")
+    counter_id = fields.Many2one('ica.queue.counter', string='Counter', domain="[('type','=','cashier')]",readonly=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('waiting', 'Waiting'),
@@ -31,6 +31,12 @@ class IcaQueueCashier(models.Model):
         self.state = 'waiting'
 
     def action_current(self):
+        current_partner = self.env.user.partner_id
+        counter_id = current_partner.counter_id
+        if counter_id.type == 'cashier':
+            self.counter_id = current_partner.counter_id.id
+        else:
+            raise ValidationError(_(f"Your Counter is {counter_id.name}"))
         self.state = 'current'
 
     def action_missing(self):

@@ -7,12 +7,13 @@ class IcaQueueReception(models.Model):
     _description = "Ica Queue Reception"
 
     name = fields.Char(string="Reference", readonly=True, default=lambda x: _('New'))
-    partner_id = fields.Many2one("res.partner", string="Partner",required=True)
+    partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     image_1920 = fields.Binary(related="partner_id.image_1920")
-    counter_id = fields.Many2one("ica.queue.counter", string="Counter",required=True,domain="[('type', '=', 'reception')]")
-    state = fields.Selection([('draft','Draft'),('confirm','Confirm')],default="draft")
-    active = fields.Boolean(string="Active",default=True)
-    date = fields.Datetime(string="Date",default=fields.Datetime.now)
+    counter_id = fields.Many2one("ica.queue.counter", string="Counter", required=False,readonly=True,
+                                 domain="[('type', '=', 'reception')]")
+    state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm')], default="draft")
+    active = fields.Boolean(string="Active", default=True)
+    date = fields.Datetime(string="Date", default=fields.Datetime.now)
 
     # @api.model
     # def create(self, values):
@@ -22,12 +23,20 @@ class IcaQueueReception(models.Model):
     def action_confirm(self):
         if self.name == _("New"):
             self.name = self.env['ir.sequence'].next_by_code('ica.queue') or _("New")
+
+        current_partner = self.env.user.partner_id
+        counter_id = current_partner.counter_id
+        if counter_id.type == 'reception':
+            self.counter_id =current_partner.counter_id.id
+        else:
+            raise ValidationError(_(f"Your Counter is {counter_id.name}"))
+
         self.change_state('confirm')
         self.date = fields.Datetime.now()
 
         cashier_data = {
-            "name":self.name,
-            "reception_id":self.id,
+            "name": self.name,
+            "reception_id": self.id,
         }
         cashier_id = self.env['ica.queue.cashier'].create(cashier_data)
         cashier_id.action_waiting()
@@ -35,11 +44,11 @@ class IcaQueueReception(models.Model):
     def action_draft(self):
         self.change_state('draft')
 
-    def change_state(self,new_state):
-        if self.is_allowed(new_state,self.state):
+    def change_state(self, new_state):
+        if self.is_allowed(new_state, self.state):
             self.state = new_state
         else:
-            raise ValidationError(_('Moving from %s to %s is not allowed.') % (self.state,new_state))
+            raise ValidationError(_('Moving from %s to %s is not allowed.') % (self.state, new_state))
 
     @api.model
     def is_allowed(self, new_state, old_state):

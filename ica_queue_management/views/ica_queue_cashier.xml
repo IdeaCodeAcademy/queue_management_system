@@ -36,7 +36,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="counter_id" required="state == 'waiting'"/>
+                        <field name="counter_id"/>
                     </group>
                 </sheet>
             </form>
