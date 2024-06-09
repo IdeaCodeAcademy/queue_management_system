@@ -6,6 +6,7 @@
         "security/ir.model.access.csv",
         "data/sequence.xml",
 
+        "views/ica_queue_cashier.xml",
         "views/ica_queue_reception.xml",
 
         "views/menus.xml",

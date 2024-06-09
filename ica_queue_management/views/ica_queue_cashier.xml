@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+
+    <record id="ica_queue_cashier_view_tree" model="ir.ui.view">
+        <field name="name">ica_queue_cashier_view_tree</field>
+        <field name="model">ica.queue.cashier</field>
+        <field name="arch" type="xml">
+            <tree string="ica_queue_cashier_tree">
+                <field name="name"/>
+                <field name="counter_id"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="ica_queue_cashier_view_form" model="ir.ui.view">
+        <field name="name">ica_queue_cashier_view_form</field>
+        <field name="model">ica.queue.cashier</field>
+        <field name="arch" type="xml">
+            <form string="ica_queue_cashier_form">
+                <header>
+                    <button name="action_rest_to_draft" type="object" string="Draft" invisible="1"/>
+                    <button name="action_waiting" type="object" string="Waiting" invisible="state != 'draft'"/>
+                    <button name="action_current" type="object" class="btn-info" string="Pick Up"
+                            invisible="state != 'waiting'"/>
+                    <button name="action_missing" type="object" class="btn-danger" string="Missing"
+                            invisible="state != 'current'"/>
+                    <button name="action_to_pharmacy" type="object" class="btn-warning" string="To Pharmacy"
+                            invisible="state != 'current'"/>
+                    <button name="action_done" type="object" class="btn-success" string="Done"
+                            invisible="state != 'current'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="waiting,current,missing,to_pharmacy"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="counter_id" required="state == 'waiting'"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="ica_queue_cashier_action" model="ir.actions.act_window">
         <field name="name">Cashier</field>
         <field name="type">ir.actions.act_window</field>

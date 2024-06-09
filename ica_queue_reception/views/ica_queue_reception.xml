@@ -5,7 +5,7 @@
         <field name="name">ica_queue_reception_view_kanban</field>
         <field name="model">ica.queue.reception</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban sample="1">
 
                 <field name="name"/>
                 <field name="partner_id"/>
@@ -13,7 +13,7 @@
                 <field name="state"/>
                 <field name="active"/>
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="kanban-box" >
                         <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
                             <t t-set="avatar_image"
                                t-value="kanban_image('res.partner', 'avatar_128', record.partner_id.raw_value)"/>
@@ -50,7 +50,7 @@
         <field name="name">ica_queue_reception_view_tree</field>
         <field name="model">ica.queue.reception</field>
         <field name="arch" type="xml">
-            <tree string="ica_queue_reception_tree">
+            <tree string="ica_queue_reception_tree" sample="1">
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="counter_id"/>
