@@ -6,9 +6,12 @@
         <field name="model">ica.queue.reception</field>
         <field name="arch" type="xml">
             <kanban>
+
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="counter_id"/>
+                <field name="state"/>
+                <field name="active"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
@@ -17,6 +20,9 @@
                             <div class="o_kanban_image_fill_left d-none d-md-block o_kanban_image_full">
                                 <img t-attf-src="#{avatar_image}" role="img" t-att-alt="record.partner_id.value"/>
                             </div>
+                            <div class="ribbon ribbon-top-right" invisible="active">
+                                    <span class="text-bg-danger">Archived</span>
+                                </div>
                             <div class="oe_kanban_details d-flex flex-column justify-content-between">
                                 <div>
                                     <strong class="o_kanban_record_title oe_partner_heading">
@@ -66,6 +72,9 @@
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
+                    <field name="active" invisible="1"/>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title">
                         <h1>
                             <field name="name"/>
@@ -95,6 +104,8 @@
                 <field name="state"/>
                 <filter name="draft" string="draft" domain="[('state', '=', 'draft')]"/>
                 <filter name="confirm" string="confirm" domain="[('state', '=', 'confirm')]"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <filter name="unarchived" string="Unarchived" domain="[('active', '=', True)]"/>
                 <group expand="0" string="Group By">
                     <filter string="State" name="groupby_state" context="{'group_by': 'state'}"/>
                     <filter string="Counter" name="groupby_counter_id" context="{'group_by': 'counter_id'}"/>

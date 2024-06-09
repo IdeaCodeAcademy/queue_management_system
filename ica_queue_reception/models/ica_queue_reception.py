@@ -8,8 +8,10 @@ class IcaQueueReception(models.Model):
 
     name = fields.Char(string="Reference", readonly=True, default=lambda x: _('New'))
     partner_id = fields.Many2one("res.partner", string="Partner",required=True)
+    image_1920 = fields.Binary(related="partner_id.image_1920")
     counter_id = fields.Many2one("ica.queue.counter", string="Counter",required=True)
     state = fields.Selection([('draft','Draft'),('confirm','Confirm')],default="draft")
+    active = fields.Boolean(string="Active",default=False)
 
     # @api.model
     # def create(self, values):
