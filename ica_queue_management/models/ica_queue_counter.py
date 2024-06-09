@@ -6,4 +6,5 @@ class IcaQueueCounter(models.Model):
     _description = 'IcaQueueCounter'
 
     name = fields.Char()
+    type = fields.Selection([('reception','Reception'),('cashier','Cashier'),('pharmacy','Pharmacy')], default='reception')
 

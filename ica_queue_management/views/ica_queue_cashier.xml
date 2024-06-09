@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ica_queue_cashier_action" model="ir.actions.act_window">
+        <field name="name">Cashier</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ica.queue.cashier</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -9,9 +9,9 @@ class IcaQueueReception(models.Model):
     name = fields.Char(string="Reference", readonly=True, default=lambda x: _('New'))
     partner_id = fields.Many2one("res.partner", string="Partner",required=True)
     image_1920 = fields.Binary(related="partner_id.image_1920")
-    counter_id = fields.Many2one("ica.queue.counter", string="Counter",required=True)
+    counter_id = fields.Many2one("ica.queue.counter", string="Counter",required=True,domain="[('type', '=', 'reception')]")
     state = fields.Selection([('draft','Draft'),('confirm','Confirm')],default="draft")
-    active = fields.Boolean(string="Active",default=False)
+    active = fields.Boolean(string="Active",default=True)
     date = fields.Datetime(string="Date",default=fields.Datetime.now)
 
     # @api.model
@@ -24,6 +24,13 @@ class IcaQueueReception(models.Model):
             self.name = self.env['ir.sequence'].next_by_code('ica.queue') or _("New")
         self.change_state('confirm')
         self.date = fields.Datetime.now()
+
+        cashier_data = {
+            "name":self.name,
+            "reception_id":self.id,
+            # ""
+        }
+        self.env['ica.queue.cashier'].create(cashier_data)
         # self.state = 'confirm'
 
     def action_draft(self):

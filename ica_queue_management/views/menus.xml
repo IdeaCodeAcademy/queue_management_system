@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <menuitem id="queue_root" name="Queue" sequence="0">
-        <menuitem id="conf_categ" name="Configuration" sequence="0">
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="ica_queue_cashier_categ" name="Cashier" action="ica_queue_management.ica_queue_cashier_action" sequence="20"/>
+        <menuitem id="conf_categ" name="Configuration" sequence="100">
             <menuitem id="ica_queue_counter_categ" name="Counters"  action="ica_queue_management.ica_queue_counter_action"/>
         </menuitem>
     </menuitem>
