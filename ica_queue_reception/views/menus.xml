@@ -4,6 +4,6 @@
     parent="ica_queue_management.queue_root" sequence="10"/>
 
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="ica_reception_categ" name="Reception KIOSK" parent="ica_queue_management.queue_root"
-              action="ica_queue_reception.ica_reception_kiosk_action" sequence="11"/>
+<!--    <menuitem id="ica_reception_categ" name="Reception KIOSK" parent="ica_queue_management.queue_root"-->
+<!--              action="ica_queue_reception.ica_reception_kiosk_action" sequence="11"/>-->
 </odoo>

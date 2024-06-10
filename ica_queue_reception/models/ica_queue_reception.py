@@ -24,7 +24,7 @@ class IcaQueueReception(models.Model):
         if self.name == _("New"):
             self.name = self.env['ir.sequence'].next_by_code('ica.queue') or _("New")
 
-        self.env['ica.queue.cashier']._check_counter_type(self, counter_type="reception")
+        # self.env['ica.queue.cashier']._check_counter_type(self, counter_type="reception")
 
         self.change_state('confirm')
         self.date = fields.Datetime.now()

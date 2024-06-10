@@ -122,9 +122,9 @@
         <field name="context">{'search_default_groupby_state':False}</field>
     </record>
 
-    <record model="ir.actions.client" id="ica_reception_kiosk_action">
-        <field name="name">Reception</field>
-        <field name="tag">ica.reception</field>
-    </record>
+<!--    <record model="ir.actions.client" id="ica_reception_kiosk_action">-->
+<!--        <field name="name">Reception</field>-->
+<!--        <field name="tag">ica.reception</field>-->
+<!--    </record>-->
 
 </odoo>

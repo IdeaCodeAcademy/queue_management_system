@@ -6,9 +6,19 @@
                 <div class="card-body">
                   <h2 class="card-title text-center m-5"><t t-esc="state.counter.name"/></h2>
                     <p class="card-text">
-                    <input type="text" placeholder="Search Partner" class="form-control mt-5 mb-5"/>
-                        <h5 class="text-start text-success">Q000001 print successfully.</h5>
-                        <h5 class="text-start text-danger">1234 partner not found.</h5>
+                    <input t-ref="search-input" type="text" placeholder="Search Partner"
+                           class="form-control mt-5 mb-5" t-on-keyup="searchPartner"/>
+<!--                        <button class="btn btn-primary" t-on-click="searchPartner">Search</button>-->
+                        <div class="container mt-5">
+                            <t t-if="state.message.type == 'success'">
+                            <h5 class="text-start text-success"><t t-esc="state.message.msg"/></h5>
+                        </t>
+                        <t t-else="">
+                            <h5 class="text-start text-danger"><t t-esc="state.message.msg"/></h5>
+                        </t>
+                        </div>
+<!--                        <h5 class="text-start text-success">Q000001 print successfully.</h5>-->
+<!--                        <h5 class="text-start text-danger">1234 partner not found.</h5>-->
                     </p>
                 </div>
             </div>
