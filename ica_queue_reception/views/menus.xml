@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <menuitem id="ica_queue_reception_categ" name="Reception" action="ica_queue_reception.ica_queue_reception_action"
-    parent="ica_queue_management.queue_root" sequence="0"/>
+    parent="ica_queue_management.queue_root" sequence="10"/>
 
     <!-- This Menu Item must have a parent and an action -->
     <menuitem id="ica_reception_categ" name="Reception KIOSK" parent="ica_queue_management.queue_root"
-              action="ica_queue_reception.ica_reception_kiosk_action" sequence="1"/>
+              action="ica_queue_reception.ica_reception_kiosk_action" sequence="11"/>
 </odoo>

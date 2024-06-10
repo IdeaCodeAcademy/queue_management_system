@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="ica_queue_reception.reception_kiosk">
+        <div class="container mt-5">
+            <div class="card shadow p-3 mb-5 bg-body rounded">
+                <div class="card-body">
+                  <h2 class="card-title text-center m-5"><t t-esc="state.counter.name"/></h2>
+                    <p class="card-text">
+                    <input type="text" placeholder="Search Partner" class="form-control mt-5 mb-5"/>
+                        <h5 class="text-start text-success">Q000001 print successfully.</h5>
+                        <h5 class="text-start text-danger">1234 partner not found.</h5>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

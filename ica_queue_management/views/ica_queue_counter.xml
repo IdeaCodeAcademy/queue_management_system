@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <record id="ica_queue_counter_view_kanban" model="ir.ui.view">
+        <field name="name">ica_queue_counter_view_kanban</field>
+        <field name="model">ica.queue.counter</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="type"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_card_header flex-grow-inf">
+                            <div class="o_kanban_card_header_title mb16">
+                                <div class="o_primary o_kanban_card_header_title_name">
+                                    <t t-esc="record.name.value"/>(<t t-esc="record.type.value"/>)
+                                </div>
+                                <div class="container mt-3">
+                                    <button name="open_client_action" type="object" class="btn btn-primary"
+                                            string="Open Counter"/>
+                                </div>
+                                <!--                                    <t t-if="!record.current_session_id.raw_value &amp;&amp; record.pos_session_username.value">-->
+                                <!--                                        <div class="badge text-bg-info o_kanban_inline_block">Opened by <t t-esc="record.pos_session_username.value"/></div>-->
+                                <!--                                    </t>-->
+                                <!--                                    <t t-if="record.pos_session_state.raw_value == 'opening_control'">-->
+                                <!--                                        <div class="badge text-bg-info o_kanban_inline_block">Opening Control</div>-->
+                                <!--                                    </t>-->
+                                <!--                                    <t t-if="record.pos_session_state.raw_value == 'closing_control'">-->
+                                <!--                                        <div class="badge text-bg-info o_kanban_inline_block">Closing Control</div>-->
+                                <!--                                    </t>-->
+                                <!--                                    <t t-if="record.pos_session_state.raw_value == 'opened' and record.pos_session_duration.raw_value &gt; 1">-->
+                                <!--                                        <div t-attf-class="badge bg-#{record.pos_session_duration.raw_value &gt; 3 and 'danger' or 'warning'} o_kanban_inline_block" title="The session has been opened for an unusually long period. Please consider closing.">-->
+                                <!--                                             To Close-->
+                                <!--                                        </div>-->
+                                <!--                                    </t>-->
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
     <record id="ica_queue_counter_action" model="ir.actions.act_window">
         <field name="name">Counters</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">ica.queue.counter</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
     </record>
 </odoo>
