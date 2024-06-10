@@ -11,5 +11,12 @@
 
         "views/menus.xml",
     ],
+    "assets":{
+        "web.assets_backend":[
+            "ica_queue_reception/static/src/**/*.js",
+            "ica_queue_reception/static/src/**/*.xml",
+        ]
+    },
+
     "license": "LGPL-3",
 }
