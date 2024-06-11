@@ -10,7 +10,9 @@ class IcaQueueCounter(models.Model):
                             default='reception')
 
     def open_client_action(self):
-        pass
+        if self.type == 'cashier':
+
+            return self._open_client_action(tag='ica.cashier')
 
     def _open_client_action(self, tag):
         return {
