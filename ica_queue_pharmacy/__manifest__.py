@@ -10,5 +10,11 @@
 
         "views/menus.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "ica_queue_pharmacy/static/src/**/*.js",
+            "ica_queue_pharmacy/static/src/**/*.xml",
+        ],
+    },
     "license": "LGPL-3",
 }

@@ -29,6 +29,10 @@ class IcaQueuePharmacy(models.Model):
         # self.env['ica.queue.cashier']._check_counter_type(self, counter_type="pharmacy")
         self.state = 'current'
 
+    def action_pickup(self,counter_id):
+        self.action_current()
+        self.counter_id = counter_id
+
     def action_missing(self):
         self.state = 'missing'
 

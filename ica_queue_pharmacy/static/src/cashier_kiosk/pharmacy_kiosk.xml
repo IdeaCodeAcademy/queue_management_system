@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="ica_queue_management.pharmacy_kiosk" t-inherit="ica_queue_management.cashier_kiosk"
+       t-inherit-mode="primary">
+        <xpath expr="//button[@t-on-click='actionToPharmacy']" position="replace"/>
+    </t>
+</templates>
