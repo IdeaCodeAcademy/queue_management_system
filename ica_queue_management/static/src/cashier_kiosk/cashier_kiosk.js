@@ -10,8 +10,8 @@ class CashierKiosk extends Component {
         this.routerService = this.env.services.router;//useService('router');
         this.ormService = this.env.services.orm;
 
-        this.model = 'ica.queue.cashier'
-        this.modelFields = ['id', 'name', 'state']
+        // this.model = 'ica.queue.cashier'
+        // this.modelFields = ['id', 'name', 'state']
 
         this.state = useState({
             'counter': {},
@@ -41,21 +41,61 @@ class CashierKiosk extends Component {
         this.state.counter = counter;
     }
 
+    async searchRead(domain) {
+        return await this.ormService.searchRead('ica.queue.cashier', domain, ['id', 'name', 'state'])
+    }
+
     async getWaitingQueues() {
-        this.state.waitingQueues = await this.ormService.searchRead(this.model, [['state', '=', 'waiting']], this.modelFields)
-        console.log(this.state.waitingQueues)
+        var domain = [['state', '=', 'waiting']];
+        this.state.waitingQueues = await this.searchRead(domain);//await this.ormService.searchRead(this.model, [['state', '=', 'waiting']], this.modelFields)
     }
 
     async getMissingQueues() {
-        this.state.missingQueues = await this.ormService.searchRead(this.model, [['state', '=', 'missing']], this.modelFields)
+        var domain = [['state', '=', 'missing']];
+        this.state.missingQueues = await this.searchRead(domain); //await this.ormService.searchRead(this.model, [['state', '=', 'missing']], this.modelFields)
 
     }
 
     async getCurrentQueue() {
-        var domain = [['state', '=', 'current'],]// ['counter_id', '=', this.state.counter.id]]
-        var currentQueues = await this.ormService.searchRead(this.model, domain, this.modelFields)
+        var domain = [['state', '=', 'current'], ['counter_id', '=', this.state.counter.id]]
+        var currentQueues = await this.searchRead(domain); //await this.ormService.searchRead(this.model, domain, this.modelFields)
         console.log(currentQueues);
         this.state.currentQueue = currentQueues[0]
+    }
+
+    async actionPickUp(waitingQueue) {
+        await this.ormService.call(
+            "ica.queue.cashier",
+            "action_pickup",
+            [[waitingQueue.id]],
+            {'counter_id': this.state.counter.id}
+        );
+        this.state.currentQueue = waitingQueue;
+        this.state.waitingQueues = this.state.waitingQueues.filter(queue => queue !== this.state.currentQueue);
+    }
+
+    async actionMissing() {
+        await this.ormService.call(
+            "ica.queue.cashier",
+            "action_missing",
+            [[this.state.currentQueue.id]],
+            {}
+        );
+        console.log(this.state.currentQueue)
+        this.state.missingQueues.push(this.state.currentQueue)
+        this.state.currentQueue = {}
+    }
+
+    async actionRecall(missingQueue) {
+        console.log(missingQueue)
+        await this.ormService.call(
+            "ica.queue.cashier",
+            "action_waiting",
+            [[missingQueue.id]],
+            {}
+        );
+        this.state.waitingQueues.push(missingQueue);
+        this.state.missingQueues = this.state.missingQueues.filter(queue => queue !== missingQueue);
     }
 }
 

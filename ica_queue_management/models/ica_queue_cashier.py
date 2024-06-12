@@ -21,7 +21,6 @@ class IcaQueueCashier(models.Model):
     start_datetime = fields.Datetime(string='Start Date', readonly=True)
     end_datetime = fields.Datetime(string='End Date', readonly=True)
 
-
     @api.constrains('state')
     def _check_state(self):
         domain = [('counter_id', '=', self.counter_id.id), ('state', '=', 'current'), ('id', '!=', self.id)]
@@ -39,6 +38,10 @@ class IcaQueueCashier(models.Model):
     def action_current(self):
         # self._check_counter_type(self, counter_type="cashier")
         self.state = 'current'
+
+    def action_pickup(self, counter_id):
+        self.action_current();
+        self.counter_id = counter_id
 
     # def _check_counter_type(self, record, counter_type):
     #     counter_id = record.env.user.partner_id.counter_id
