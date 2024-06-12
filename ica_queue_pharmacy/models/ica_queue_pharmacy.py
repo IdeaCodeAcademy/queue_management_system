@@ -26,7 +26,7 @@ class IcaQueuePharmacy(models.Model):
         self.state = 'waiting'
 
     def action_current(self):
-        self.env['ica.queue.cashier']._check_counter_type(self, counter_type="pharmacy")
+        # self.env['ica.queue.cashier']._check_counter_type(self, counter_type="pharmacy")
         self.state = 'current'
 
     def action_missing(self):

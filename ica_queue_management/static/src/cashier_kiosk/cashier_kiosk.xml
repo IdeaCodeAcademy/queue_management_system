@@ -3,172 +3,58 @@
     <t t-name="ica_queue_management.cashier_kiosk">
         <div class="row h-100">
         <!-- Left side (Current Queue and Missing Queues) -->
-        <div class="col-lg-6 bg-light text-primary left-side">
+            <div class="col-lg-6 bg-light text-primary left-side">
             <div class="d-flex flex-column h-100">
                 <!-- Current Queue -->
                 <div class="current-queue">
                     <div>
                         <h1>Current Queue</h1>
-                    <div class="container">
-                        <h1>Q000001</h1>
-                        <h5><t t-esc="state.counter.name"/></h5>
+                        <div class="container">
+                        <h1><t t-esc="state.currentQueue.name"/></h1>
+                            <h5><t t-esc="state.counter.name"/></h5>
                     </div>
-                    <div class="container mt-3">
+                        <div class="container mt-3">
                         <button class="btn btn-primary m-2">Call</button>
-                        <button class="btn btn-danger m-2">Missing</button>
-                        <button class="btn btn-warning m-2">To Pharmacy</button>
-                        <button class="btn btn-success m-2">Done</button>
+                            <button class="btn btn-danger m-2">Missing</button>
+                            <button class="btn btn-warning m-2">To Pharmacy</button>
+                            <button class="btn btn-success m-2">Done</button>
                     </div>
                     </div>
                 </div>
                 <!-- Missing Queues -->
                 <div class="bg-danger text-white p-0 rounded missing-queues">
                         <h2 class="mb-4 text-white m-5">Missing Queues</h2>
-                        <div class="p-0 rounded scrollable">
+                    <div class="p-0 rounded scrollable">
+                        <t t-foreach="state.missingQueues" t-as="missingQueue"
+                                               t-key="missingQueue.id">
                             <div class="card card-shadow m-2">
                                 <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
+                                    <h5 class="card-title text-danger"><t t-esc="missingQueue.name"/></h5>
                                     <button class="btn btn-danger">Recall</button>
                                 </div>
                             </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                             `       <h5 class="card-title text-danger">Q000002</h5>
-                                    <button class="btn btn-danger">Recall</button>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <div class="card card-shadow m-2">
-                                <div class="card-body">
-                                    <h5 class="card-title text-danger">Q000002</h5>
-                                </div>
-                            </div>
-                            <!-- Add more cards if needed -->
+                        </t>
+
+
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right side (Waiting Queues) -->
-        <div class="col-lg-6 bg-secondary text-danger right-side">
-            <h2 class="mb-4 text-white m-5">Waiting Queues</h2>
-            <div class="p-0 rounded scrollable">
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-secondary">Q000002</h5>
-                        <button class="btn btn-primary">Pickup</button>
+            <!-- Right side (Waiting Queues) -->
+            <div class="col-lg-6 bg-secondary text-danger right-side">
+            <h2 class="mb-4 mt-5 mx-1">Waiting Queues</h2>
+                <div class="p-0 rounded scrollable">
+<!--                for  waitingQueue in state.waitingQueues:-->
+                    <t t-foreach="state.waitingQueues" t-as="waitingQueue" t-key="waitingQueue.id">
+                    <div class="card card-shadow m-2">
+                        <div class="card-body">
+                            <h4 class="card-title"><t t-esc="waitingQueue.name"/></h4>
+                            <button class="btn btn-primary">Pickup</button>
+                        </div>
                     </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <div class="card card-shadow m-2">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Q000002</h5>
-                    </div>
-                </div>
-                <!-- Add more cards if needed -->
+                </t>
+
             </div>
         </div>
     </div>
