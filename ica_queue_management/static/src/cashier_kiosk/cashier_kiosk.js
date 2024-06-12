@@ -3,6 +3,8 @@
 import {Component, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {loadBundle} from "@web/core/assets";
+import {browser} from "@web/core/browser/browser";
+import {routeToUrl} from "@web/core/browser/router_service";
 
 class CashierKiosk extends Component {
 
@@ -29,6 +31,7 @@ class CashierKiosk extends Component {
     async getCounter() {
         var counter = this.props.action.context.counter;
         let current = this.routerService.current;
+
         if (counter !== undefined) {
             current.search.counter_id = counter.id
         } else {
@@ -38,6 +41,8 @@ class CashierKiosk extends Component {
                 counter = counters[0];
             }
         }
+
+        browser.location.href = browser.location.origin + routeToUrl(current)
         this.state.counter = counter;
     }
 
