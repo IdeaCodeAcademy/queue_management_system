@@ -15,9 +15,9 @@
                     </div>
                         <div class="container mt-3">
                         <button class="btn btn-primary m-2">Call</button>
-                            <button class="btn btn-danger m-2" t-on-click="actionMissing">Missing</button>
-                            <button class="btn btn-warning m-2">To Pharmacy</button>
-                            <button class="btn btn-success m-2">Done</button>
+                            <button t-attf-class="btn btn-danger m-2" t-on-click="actionMissing">Missing</button>
+                            <button class="btn btn-warning m-2" t-on-click="actionToPharmacy">To Pharmacy</button>
+                            <button class="btn btn-success m-2" t-on-click="actionDone">Done</button>
                     </div>
                     </div>
                 </div>

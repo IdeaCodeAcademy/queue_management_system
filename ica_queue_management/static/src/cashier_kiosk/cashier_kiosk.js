@@ -80,19 +80,22 @@ class CashierKiosk extends Component {
     }
 
     async actionMissing() {
+        if (!this.state.currentQueue) {
+            return
+        }
         await this.ormService.call(
             "ica.queue.cashier",
             "action_missing",
             [[this.state.currentQueue.id]],
             {}
         );
-        console.log(this.state.currentQueue)
+        // console.log(this.state.currentQueue)
         this.state.missingQueues.push(this.state.currentQueue)
         this.state.currentQueue = {}
     }
 
     async actionRecall(missingQueue) {
-        console.log(missingQueue)
+        // console.log(missingQueue)
         await this.ormService.call(
             "ica.queue.cashier",
             "action_waiting",
@@ -101,6 +104,34 @@ class CashierKiosk extends Component {
         );
         this.state.waitingQueues.push(missingQueue);
         this.state.missingQueues = this.state.missingQueues.filter(queue => queue !== missingQueue);
+    }
+
+    async actionToPharmacy() {
+        if (!this.state.currentQueue) {
+            return
+        }
+
+        await this.ormService.call(
+            "ica.queue.cashier",
+            "action_to_pharmacy",
+            [[this.state.currentQueue.id]],
+            {}
+        );
+        this.state.currentQueue = {}
+    }
+
+    async actionDone() {
+        if (!this.state.currentQueue) {
+            return
+        }
+
+        await this.ormService.call(
+            "ica.queue.cashier",
+            "action_done",
+            [[this.state.currentQueue.id]],
+            {}
+        );
+        this.state.currentQueue = {}
     }
 }
 
