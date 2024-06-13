@@ -1,18 +1,16 @@
 /** @odoo-module **/
 
-import {Component, useState} from "@odoo/owl";
+import {Component, onWillStart, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {loadBundle} from "@web/core/assets";
 
 export default class CashierKiosk extends Component {
 
-    async setup() {
+    setup() {
         this.routerService = this.env.services.router;//useService('router');
         this.ormService = this.env.services.orm;
         this.titleService = this.env.services.title;
-
-        // this.model = 'ica.queue.cashier'
-        // this.modelFields = ['id', 'name', 'state']
+        this.busService = this.env.services.bus_service
 
         this.state = useState({
             'counter': {},
@@ -20,11 +18,26 @@ export default class CashierKiosk extends Component {
             'missingQueues': [],
             'currentQueue': {},
         });
-        await loadBundle('ica_queue_management.assets_backend');
-        await this.getCounter();
-        await this.getWaitingQueues();
-        await this.getMissingQueues();
-        await this.getCurrentQueue();
+        this.subscribeWaitingQueues();
+        this.busService.addChannel(this.getModel());
+
+        onWillStart(async () => {
+            await loadBundle('ica_queue_management.assets_backend');
+            await this.getCounter();
+            await this.getWaitingQueues();
+            await this.getMissingQueues();
+            await this.getCurrentQueue();
+        });
+    }
+
+    subscribeChannel(eventName, callback) {
+        this.busService.subscribe(eventName, callback);
+    }
+
+    subscribeWaitingQueues() {
+        this.subscribeChannel('waiting', payload => {
+            this.state.waitingQueues.push(payload);
+        })
     }
 
     async getCounter() {

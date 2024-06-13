@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import {Component, useRef, useState} from "@odoo/owl";
+import {Component, onWillStart, useRef, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 
 class ReceptionKiosk extends Component {
@@ -13,7 +13,9 @@ class ReceptionKiosk extends Component {
             "counter": {},
             "message": {}
         })
-        await this.getCounter();
+        onWillStart(async () => {
+            await this.getCounter();
+        })
     }
 
     async getCounter() {

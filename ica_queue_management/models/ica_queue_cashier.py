@@ -34,6 +34,7 @@ class IcaQueueCashier(models.Model):
     def action_waiting(self):
         self.start_datetime = fields.Datetime.now()
         self.state = 'waiting'
+        self.env['bus.bus']._sendone(self._name, 'waiting', self.read()[0])
 
     def action_current(self):
         # self._check_counter_type(self, counter_type="cashier")
