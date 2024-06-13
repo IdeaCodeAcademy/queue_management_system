@@ -7,6 +7,7 @@ class ReceptionKiosk extends Component {
     async setup() {
         this.routerService = this.env.services.router;//useService('router');
         this.ormService = this.env.services.orm;
+        this.titleService = this.env.services.title;
         this.searchInput = useRef('search-input');
         this.state = useState({
             "counter": {},
@@ -18,17 +19,22 @@ class ReceptionKiosk extends Component {
     async getCounter() {
         var counter = this.props.action.context.counter;
         let current = this.routerService.current;
-        if (counter !== undefined) {
-            current.search.counter_id = counter.id
-        } else {
+        let counterId = localStorage.getItem('counterId');
+
+        if (counter === undefined) {
             if (current.search.counter_id) {
-                let counters = await this.ormService.searchRead('ica.queue.counter', [['id', '=', current.search.counter_id]],
-                    ['id', 'name', 'type'])
-                counter = counters[0];
+                counterId = current.search.counter_id;
             }
+            let counters = await this.ormService.searchRead('ica.queue.counter', [['id', '=', counterId]],
+                ['id', 'name', 'type'])
+            counter = counters[0];
         }
+        current.search.counter_id = counter.id;
+        localStorage.setItem('counterId', counter.id);
         this.state.counter = counter;
+        this.titleService.setParts({action: counter.name})
     }
+
 
     async searchPartner(e) {
         if (e.keyCode === 13) {

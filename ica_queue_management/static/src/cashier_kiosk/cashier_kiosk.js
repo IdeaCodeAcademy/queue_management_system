@@ -3,14 +3,13 @@
 import {Component, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {loadBundle} from "@web/core/assets";
-import {browser} from "@web/core/browser/browser";
-import {routeToUrl} from "@web/core/browser/router_service";
 
 export default class CashierKiosk extends Component {
 
     async setup() {
         this.routerService = this.env.services.router;//useService('router');
         this.ormService = this.env.services.orm;
+        this.titleService = this.env.services.title;
 
         // this.model = 'ica.queue.cashier'
         // this.modelFields = ['id', 'name', 'state']
@@ -31,25 +30,27 @@ export default class CashierKiosk extends Component {
     async getCounter() {
         var counter = this.props.action.context.counter;
         let current = this.routerService.current;
+        let counterId = localStorage.getItem('counterId');
 
-        if (counter !== undefined) {
-            current.search.counter_id = counter.id
-        } else {
+        if (counter === undefined) {
             if (current.search.counter_id) {
-                let counters = await this.ormService.searchRead('ica.queue.counter', [['id', '=', current.search.counter_id]],
-                    ['id', 'name', 'type'])
-                counter = counters[0];
+                counterId = current.search.counter_id;
             }
+            let counters = await this.ormService.searchRead('ica.queue.counter', [['id', '=', counterId]],
+                ['id', 'name', 'type'])
+            counter = counters[0];
         }
-
-        browser.location.href = browser.location.origin + routeToUrl(current)
+        current.search.counter_id = counter.id;
+        localStorage.setItem('counterId', counter.id);
         this.state.counter = counter;
+        this.titleService.setParts({action: counter.name})
     }
 
     // todo:edit model
-    getModel(){
+    getModel() {
         return 'ica.queue.cashier';
     }
+
     async searchRead(domain) {
         return await this.ormService.searchRead(this.getModel(), domain, ['id', 'name', 'state'])
     }
@@ -82,7 +83,6 @@ export default class CashierKiosk extends Component {
     }
 
     // todo:edit model
-
 
 
     async actionPickUp(waitingQueue) {
