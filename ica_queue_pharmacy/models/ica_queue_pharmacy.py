@@ -24,6 +24,8 @@ class IcaQueuePharmacy(models.Model):
     def action_waiting(self):
         self.start_datetime = fields.Datetime.now()
         self.state = 'waiting'
+        self.env['bus.bus']._sendone(self._name, f'{self._name}/waiting', self.read()[0])
+
 
     def action_current(self):
         # self.env['ica.queue.cashier']._check_counter_type(self, counter_type="pharmacy")
