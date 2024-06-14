@@ -15,3 +15,5 @@ class IcaConfirmWizard(models.TransientModel):
         if active_model == 'ica.queue.reception':
             active_record.counter_id = self.counter_id.id
             active_record.action_confirm()
+        return super(IcaConfirmWizard,self).action_confirm()
+

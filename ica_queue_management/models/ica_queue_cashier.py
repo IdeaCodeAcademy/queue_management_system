@@ -20,6 +20,7 @@ class IcaQueueCashier(models.Model):
 
     start_datetime = fields.Datetime(string='Start Date', readonly=True)
     end_datetime = fields.Datetime(string='End Date', readonly=True)
+    partner_id = fields.Many2one('res.partner', string='Partner', readonly=True)
 
     @api.constrains('state')
     def _check_state(self):

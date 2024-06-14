@@ -14,3 +14,4 @@ class IcaConfirmWizard(models.TransientModel):
 
         if active_model == 'ica.queue.pharmacy':
             active_record.action_pickup(counter_id=self.counter_id.id)
+        return super(IcaConfirmWizard,self).action_confirm()

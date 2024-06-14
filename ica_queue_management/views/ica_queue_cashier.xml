@@ -44,6 +44,7 @@
                         <field name="counter_id"/>
                         <field name="start_datetime"/>
                         <field name="end_datetime"/>
+                        <field name="partner_id"/>
                     </group>
                 </sheet>
             </form>

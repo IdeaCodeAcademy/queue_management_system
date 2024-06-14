@@ -27,6 +27,7 @@ class IcaQueueReception(models.Model):
         cashier_data = {
             "name": self.name,
             "reception_id": self.id,
+            'partner_id':self.partner_id.id,
         }
         cashier_id = self.env['ica.queue.cashier'].create(cashier_data)
         cashier_id.action_waiting()
