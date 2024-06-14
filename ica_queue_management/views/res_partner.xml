@@ -11,6 +11,7 @@
                 <!-- Add your fields or attributes here -->
                 <field name="queue_barcode"/>
             </xpath>
+
             <xpath expr="//notebook" position="inside">
                 <page string="Queues" name="ica_queue" autofocus="autofocus">
                     <field name="cashier_ids">
@@ -19,12 +20,24 @@
                             <field name="name"/>
                             <field name="counter_id"/>
                             <field name="state" widget="badge"/>
-                            <field name="start_datetime"/>
-                            <field name="end_datetime"/>
+                            <field name="start_datetime" optional="hide"/>
+                            <field name="end_datetime" optional="show"/>
                         </tree>
                     </field>
                 </page>
             </xpath>
+
+            <div name="button_box" position="inside">
+                <button type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                        name="open_queues">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="queue_count"/>
+                        </span>
+                        <span class="o_stat_text">Queues</span>
+                    </div>
+                </button>
+            </div>
 
         </field>
     </record>

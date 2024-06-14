@@ -7,7 +7,7 @@
             <form string="ica_confirm_wizard_form">
                 <sheet>
                     <group>
-                        <field name="counter_id"/>
+                        <field name="counter_id" widget="radio"/>
                     </group>
                     <footer>
                         <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary"/>
