@@ -10,6 +10,7 @@
         "views/res_partner.xml",
 
         "views/menus.xml",
+        "wizard/ica_confirm_wizard.xml",
     ],
     "assets": {
         "web.assets_backend": [

@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_ica_queue_counter,ica.queue.counter,model_ica_queue_counter,,1,1,1,1
 access_ica_queue_cashier,ica.queue.cashier,model_ica_queue_cashier,,1,1,1,1
+access_ica_confirm_wizard,ica.confirm.wizard,model_ica_confirm_wizard,,1,1,1,1

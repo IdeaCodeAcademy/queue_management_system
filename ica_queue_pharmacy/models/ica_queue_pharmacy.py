@@ -1,10 +1,18 @@
-from odoo import models
+from odoo import models,fields
 
 
 class IcaQueuePharmacy(models.Model):
     _name = 'ica.queue.pharmacy'
     _inherit = 'ica.queue.cashier'
     _description = 'IcaQueuePharmacy'
+
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('waiting', 'Waiting'),
+        ('current', 'Current'),
+        ('missing', 'Missing'),
+        ('done', 'Done'),
+    ], default='draft')
 
     # name = fields.Char(readonly=True)
     # counter_id = fields.Many2one('ica.queue.counter', string='Counter',domain="[('type','=','pharmacy')]",readonly=True)

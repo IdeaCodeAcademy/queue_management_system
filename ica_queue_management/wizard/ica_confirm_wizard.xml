@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ica_confirm_wizard_view_form" model="ir.ui.view">
+        <field name="name">ica_confirm_wizard_view_form</field>
+        <field name="model">ica.confirm.wizard</field>
+        <field name="arch" type="xml">
+            <form string="ica_confirm_wizard_form">
+                <sheet>
+                    <group>
+                        <field name="counter_id"/>
+                    </group>
+                    <footer>
+                        <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

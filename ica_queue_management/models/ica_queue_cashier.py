@@ -14,7 +14,7 @@ class IcaQueueCashier(models.Model):
         ('waiting', 'Waiting'),
         ('current', 'Current'),
         ('missing', 'Missing'),
-        ('to_pharmacy', 'To Pharmacy'), # todo:
+        ('to_pharmacy', 'To Pharmacy'),  # todo:
         ('done', 'Done'),
     ], default='draft')
 
@@ -39,6 +39,8 @@ class IcaQueueCashier(models.Model):
     def action_current(self):
         self.state = 'current'
 
+
+
     def action_pickup(self, counter_id):
         self.action_current();
         self.counter_id = counter_id
@@ -48,7 +50,6 @@ class IcaQueueCashier(models.Model):
         self.state = 'missing'
         self.env['bus.bus']._sendone(self._name, f'{self._name}/missing', self.read()[0])
 
-
     def action_to_pharmacy(self):
         self.end_datetime = fields.Datetime.now()
         self.state = 'to_pharmacy'
@@ -56,3 +57,12 @@ class IcaQueueCashier(models.Model):
     def action_done(self):
         self.end_datetime = fields.Datetime.now()
         self.state = 'done'
+
+    def action_confirm_wizard(self):
+        return {
+            'name': _('Confirm Counter'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'ica.confirm.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+        }

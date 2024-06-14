@@ -14,6 +14,10 @@ class IcaQueueReception(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm')], default="draft")
     active = fields.Boolean(string="Active", default=True)
     date = fields.Datetime(string="Date", default=fields.Datetime.now,readonly=True)
+
+    def action_confirm_wizard(self):
+        return self.env['ica.queue.cashier'].action_confirm_wizard()
+
     def action_confirm(self):
         if self.name == _("New"):
             self.name = self.env['ir.sequence'].next_by_code('ica.queue') or _("New")
