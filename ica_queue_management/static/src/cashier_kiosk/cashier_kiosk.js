@@ -20,6 +20,8 @@ export default class CashierKiosk extends Component {
         });
         this.busService.addChannel(this.getModel());
         this.subscribeWaitingQueues();
+        this.subscribePickQueue();
+        this.subscribeMissingQueue();
 
         onWillStart(async () => {
             await loadBundle('ica_queue_management.assets_backend');
@@ -37,6 +39,22 @@ export default class CashierKiosk extends Component {
     subscribeWaitingQueues() {
         this.subscribeChannel(`${this.getModel()}/waiting`, payload => {
             this.state.waitingQueues.push(payload);
+            this.state.missingQueues = this.state.missingQueues.filter(queue=>queue.id !== payload.id);
+        })
+    }
+
+    subscribePickQueue() {
+        this.subscribeChannel(`${this.getModel()}/pickup`, pickUpQueue => {
+            // console.log(pickUpQueue);
+            this.state.waitingQueues = this.state.waitingQueues.filter(queue => queue.id !== pickUpQueue.id);
+        })
+    }
+
+    subscribeMissingQueue() {
+        this.subscribeChannel(`${this.getModel()}/missing`, missingQueue => {
+            console.log("missing")
+            console.log(missingQueue);
+            this.state.missingQueues.push(missingQueue);// = this.state.waitingQueues.filter(queue=> queue.id !== pickUpQueue.id);
         })
     }
 
@@ -114,15 +132,9 @@ export default class CashierKiosk extends Component {
         if (!this.state.currentQueue) {
             return
         }
-        // await this.ormService.call(
-        //     "ica.queue.cashier",
-        //     "action_missing",
-        //     [[this.state.currentQueue.id]],
-        //     {}
-        // );
+
         await this.ormCallMethod('action_missing', this.state.currentQueue.id, {})
-        // console.log(this.state.currentQueue)
-        this.state.missingQueues.push(this.state.currentQueue)
+        // this.state.missingQueues.push(this.state.currentQueue)
         this.state.currentQueue = {}
     }
 

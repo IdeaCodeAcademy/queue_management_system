@@ -43,6 +43,8 @@ class IcaQueueCashier(models.Model):
     def action_pickup(self, counter_id):
         self.action_current();
         self.counter_id = counter_id
+        self.env['bus.bus']._sendone(self._name, f'{self._name}/pickup', self.read()[0])
+
 
     # def _check_counter_type(self, record, counter_type):
     #     counter_id = record.env.user.partner_id.counter_id
@@ -52,6 +54,8 @@ class IcaQueueCashier(models.Model):
 
     def action_missing(self):
         self.state = 'missing'
+        self.env['bus.bus']._sendone(self._name, f'{self._name}/missing', self.read()[0])
+
 
     def action_to_pharmacy(self):
         self.end_datetime = fields.Datetime.now()
