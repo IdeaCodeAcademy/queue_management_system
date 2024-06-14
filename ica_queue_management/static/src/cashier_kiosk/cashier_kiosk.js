@@ -4,6 +4,8 @@ import {Component, onWillStart, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {loadBundle} from "@web/core/assets";
 
+const actionRegistry = registry.category("actions");
+
 export default class CashierKiosk extends Component {
 
     setup() {
@@ -39,7 +41,7 @@ export default class CashierKiosk extends Component {
     subscribeWaitingQueues() {
         this.subscribeChannel(`${this.getModel()}/waiting`, payload => {
             this.state.waitingQueues.push(payload);
-            this.state.missingQueues = this.state.missingQueues.filter(queue=>queue.id !== payload.id);
+            this.state.missingQueues = this.state.missingQueues.filter(queue => queue.id !== payload.id);
         })
     }
 
@@ -54,7 +56,7 @@ export default class CashierKiosk extends Component {
         this.subscribeChannel(`${this.getModel()}/missing`, missingQueue => {
             console.log("missing")
             console.log(missingQueue);
-            this.state.missingQueues.push(missingQueue);// = this.state.waitingQueues.filter(queue=> queue.id !== pickUpQueue.id);
+            this.state.missingQueues.push(missingQueue);
         })
     }
 
@@ -97,18 +99,18 @@ export default class CashierKiosk extends Component {
 
     async getWaitingQueues() {
         var domain = [['state', '=', 'waiting']];
-        this.state.waitingQueues = await this.searchRead(domain);//await this.ormService.searchRead(this.model, [['state', '=', 'waiting']], this.modelFields)
+        this.state.waitingQueues = await this.searchRead(domain);
     }
 
     async getMissingQueues() {
         var domain = [['state', '=', 'missing']];
-        this.state.missingQueues = await this.searchRead(domain); //await this.ormService.searchRead(this.model, [['state', '=', 'missing']], this.modelFields)
+        this.state.missingQueues = await this.searchRead(domain);
 
     }
 
     async getCurrentQueue() {
         var domain = [['state', '=', 'current'], ['counter_id', '=', this.state.counter.id]]
-        var currentQueues = await this.searchRead(domain); //await this.ormService.searchRead(this.model, domain, this.modelFields)
+        var currentQueues = await this.searchRead(domain);
         console.log(currentQueues);
         this.state.currentQueue = currentQueues[0]
     }
@@ -117,12 +119,6 @@ export default class CashierKiosk extends Component {
 
 
     async actionPickUp(waitingQueue) {
-        // await this.ormService.call(
-        //     "ica.queue.cashier",
-        //     "action_pickup",
-        //     [[waitingQueue.id]],
-        //     {'counter_id': this.state.counter.id}
-        // );
         await this.ormCallMethod('action_pickup', waitingQueue.id, {'counter_id': this.state.counter.id})
         this.state.currentQueue = waitingQueue;
         this.state.waitingQueues = this.state.waitingQueues.filter(queue => queue !== this.state.currentQueue);
@@ -134,13 +130,11 @@ export default class CashierKiosk extends Component {
         }
 
         await this.ormCallMethod('action_missing', this.state.currentQueue.id, {})
-        // this.state.missingQueues.push(this.state.currentQueue)
         this.state.currentQueue = {}
     }
 
     async actionRecall(missingQueue) {
         await this.ormCallMethod('action_waiting', missingQueue.id, {})
-        // this.state.waitingQueues.push(missingQueue);
         this.state.missingQueues = this.state.missingQueues.filter(queue => queue !== missingQueue);
     }
 
@@ -148,13 +142,6 @@ export default class CashierKiosk extends Component {
         if (!this.state.currentQueue) {
             return
         }
-
-        // await this.ormService.call(
-        //     "ica.queue.cashier",
-        //     "action_to_pharmacy",
-        //     [[this.state.currentQueue.id]],
-        //     {}
-        // );
         await this.ormCallMethod('action_to_pharmacy', this.state.currentQueue.id, {})
         this.state.currentQueue = {}
     }
@@ -163,13 +150,6 @@ export default class CashierKiosk extends Component {
         if (!this.state.currentQueue) {
             return
         }
-
-        // await this.ormService.call(
-        //     "ica.queue.cashier",
-        //     "action_done",
-        //     [[this.state.currentQueue.id]],
-        //     {}
-        // );
         await this.ormCallMethod('action_done', this.state.currentQueue.id, {})
         this.state.currentQueue = {}
     }
@@ -177,4 +157,4 @@ export default class CashierKiosk extends Component {
 
 CashierKiosk.template = "ica_queue_management.cashier_kiosk";
 
-registry.category('actions').add('ica.cashier', CashierKiosk)
+actionRegistry.add('ica.cashier', CashierKiosk)

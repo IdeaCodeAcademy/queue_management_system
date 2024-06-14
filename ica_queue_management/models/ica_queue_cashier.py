@@ -14,7 +14,7 @@ class IcaQueueCashier(models.Model):
         ('waiting', 'Waiting'),
         ('current', 'Current'),
         ('missing', 'Missing'),
-        ('to_pharmacy', 'To Pharmacy'),
+        ('to_pharmacy', 'To Pharmacy'), # todo:
         ('done', 'Done'),
     ], default='draft')
 
@@ -37,20 +37,12 @@ class IcaQueueCashier(models.Model):
         self.env['bus.bus']._sendone(self._name, f'{self._name}/waiting', self.read()[0])
 
     def action_current(self):
-        # self._check_counter_type(self, counter_type="cashier")
         self.state = 'current'
 
     def action_pickup(self, counter_id):
         self.action_current();
         self.counter_id = counter_id
         self.env['bus.bus']._sendone(self._name, f'{self._name}/pickup', self.read()[0])
-
-
-    # def _check_counter_type(self, record, counter_type):
-    #     counter_id = record.env.user.partner_id.counter_id
-    #     if counter_id.type != counter_type:
-    #         raise ValidationError(_(f"Your Counter is {counter_id.name}"))
-    #     record.counter_id = counter_id.id
 
     def action_missing(self):
         self.state = 'missing'

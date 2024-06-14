@@ -11,7 +11,6 @@ class IcaQueueCounter(models.Model):
 
     def open_client_action(self):
         if self.type == 'cashier':
-
             return self._open_client_action(tag='ica.cashier')
 
     def _open_client_action(self, tag):
