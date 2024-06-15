@@ -11,6 +11,8 @@
 
         "views/menus.xml",
         "wizard/ica_confirm_wizard.xml",
+
+        "data/ica_queue_counter.xml"
     ],
     "assets": {
         "web.assets_backend": [

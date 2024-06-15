@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="reception_counter_1" model="ica.queue.counter">
+            <field name="name">Reception Counter 1</field>
+            <field name="type">reception</field>
+        </record>
+        <record id="reception_counter_2" model="ica.queue.counter">
+            <field name="name">Reception Counter 2</field>
+            <field name="type">reception</field>
+        </record>
+
+        <record id="cashier_counter_1" model="ica.queue.counter">
+            <field name="name">Cashier Counter 1</field>
+            <field name="type">cashier</field>
+        </record>
+        <record id="cashier_counter_2" model="ica.queue.counter">
+            <field name="name">Cashier Counter 2</field>
+            <field name="type">cashier</field>
+        </record>
+
+        <record id="pharmacy_counter_1" model="ica.queue.counter">
+            <field name="name">Pharmacy Counter 1</field>
+            <field name="type">pharmacy</field>
+        </record>
+        <record id="pharmacy_counter_2" model="ica.queue.counter">
+            <field name="name">Pharmacy Counter 2</field>
+            <field name="type">pharmacy</field>
+        </record>
+
+
+    </data>
+</odoo>
