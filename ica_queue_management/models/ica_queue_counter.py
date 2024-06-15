@@ -4,10 +4,11 @@ from odoo import fields, models
 class IcaQueueCounter(models.Model):
     _name = 'ica.queue.counter'
     _description = 'IcaQueueCounter'
+    _order="name ASC"
+
 
     name = fields.Char()
-    type = fields.Selection([('reception', 'Reception'), ('cashier', 'Cashier'), ('pharmacy', 'Pharmacy')],
-                            default='reception')
+    type = fields.Selection([('cashier', 'Cashier')],default='cashier')
 
     def open_client_action(self):
         if self.type == 'cashier':

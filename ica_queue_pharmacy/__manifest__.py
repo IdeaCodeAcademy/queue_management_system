@@ -9,6 +9,8 @@
         "views/ica_queue_cashier.xml",
 
         "views/menus.xml",
+
+        "data/ica_queue_counter.xml",
     ],
     "assets": {
         "web.assets_backend": [
