@@ -4,6 +4,7 @@
     "depends": ["contacts"],
     "data": [
         "security/ir.model.access.csv",
+        "security/queue_security.xml",
 
         "views/ica_queue_cashier.xml",
         "views/ica_queue_counter.xml",
@@ -12,7 +13,7 @@
         "views/menus.xml",
         "wizard/ica_confirm_wizard.xml",
 
-        "data/ica_queue_counter.xml"
+        "data/ica_queue_counter.xml",
     ],
     "assets": {
         "web.assets_backend": [

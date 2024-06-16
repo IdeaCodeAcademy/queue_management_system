@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="ica_queue_pharmacy_categ" name="Pharmacy" parent="ica_queue_management.queue_root" action="ica_queue_pharmacy_action" sequence="50"/>
+    <menuitem id="ica_queue_pharmacy_categ" name="Pharmacy" parent="ica_queue_management.queue_root"
+              action="ica_queue_pharmacy_action" sequence="50" groups="ica_queue_management.group_pharmacy"/>
 </odoo>
