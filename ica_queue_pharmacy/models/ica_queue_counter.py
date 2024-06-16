@@ -4,7 +4,7 @@ from odoo import fields, models
 class IcaQueueCounter(models.Model):
     _inherit = 'ica.queue.counter'
 
-    type = fields.Selection([('pharmacy', 'Pharmacy')])
+    type = fields.Selection(selection_add=[('pharmacy', 'Pharmacy')])
 
 
     def open_client_action(self):

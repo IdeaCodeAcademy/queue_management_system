@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <menuitem id="ica_queue_reception_categ" name="Reception" action="ica_queue_reception.ica_queue_reception_action"
-    parent="ica_queue_management.queue_root" sequence="10" groups="ica_queue_management.group_reception"/>
+    parent="ica_queue_management.queue_root" sequence="10" groups="ica_queue_reception.group_reception"/>
 </odoo>

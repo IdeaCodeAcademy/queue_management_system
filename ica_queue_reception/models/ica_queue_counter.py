@@ -4,7 +4,7 @@ from odoo import fields, models
 class IcaQueueCounter(models.Model):
     _inherit = 'ica.queue.counter'
 
-    type = fields.Selection([('reception', 'Reception')],default='reception')
+    type = fields.Selection(selection_add=[('reception', 'Reception')],default='reception')
 
     def open_client_action(self):
         if self.type == 'reception':

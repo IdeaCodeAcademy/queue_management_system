@@ -6,7 +6,7 @@ class IcaQueuePharmacy(models.Model):
     _inherit = 'ica.queue.cashier'
     _description = 'IcaQueuePharmacy'
 
-    state = fields.Selection([
+    state = fields.Selection(selection_add=[
         ('draft', 'Draft'),
         ('waiting', 'Waiting'),
         ('current', 'Current'),

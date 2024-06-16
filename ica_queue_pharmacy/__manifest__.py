@@ -4,6 +4,7 @@
     "depends": ["ica_queue_management"],
     "data": [
         "security/ir.model.access.csv",
+        "security/queue_security.xml",
 
         "views/ica_queue_pharmacy.xml",
         "views/ica_queue_cashier.xml",

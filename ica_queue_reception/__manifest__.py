@@ -4,6 +4,8 @@
     "depends": ["base","ica_queue_management"],
     "data":[
         "security/ir.model.access.csv",
+        "security/queue_security.xml",
+
         "data/sequence.xml",
 
         "views/ica_queue_cashier.xml",
